@@ -12,10 +12,11 @@ typedef struct Node_tag
 	struct Node_tag* next;
 } Node_t;
 
-
 void push(Node_t** head, T value);
 Node_t* pop1(Node_t** head);
 void SortStackByAdress(Node_t* srtStack);
+void (*SortStackByAdres) (Node_t* srtStack);
+void SortStackByData(Node_t* srtStack);
 
 void push(Node_t** head, T value)
 {
@@ -24,6 +25,7 @@ void push(Node_t** head, T value)
 	{
 		exit(STACK_OVERFLOW);
 	}
+	SortStackByAdres = SortStackByData;
 
 	tmp->next = *head;
 	tmp->value = value;
@@ -42,8 +44,6 @@ Node_t* pop1(Node_t** head)
 	*head = (*head)->next;
 	return out;
 }
-
-void (*SortStackByAdres) (Node_t* srtStack);
 
 void SortStackByAdress(Node_t* srtStack)
 {
@@ -148,7 +148,6 @@ Node_t* dltNegativeElems(Node_t* head)
 size_t getSize(const Node_t* head)
 {
 	size_t size = 0;
-	SortStackByAdres = SortStackByData;
 	while (head)
 	{
 		size++;
