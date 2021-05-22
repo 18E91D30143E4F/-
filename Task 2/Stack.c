@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #define STACK_OVERFLOW  -100
 #define STACK_UNDERFLOW -101
 #define OUT_OF_MEMORY   -102
@@ -35,6 +36,63 @@ Node_t* pop1(Node_t** head)
 	out = *head;
 	*head = (*head)->next;
 	return out;
+}
+
+
+void SortStackByAdress(Node_t* srtStack)
+{
+	Node_t* t, * m, * a, * b;
+
+	for (bool go = true; go; )
+	{
+		go = false;
+		a = t = srtStack;
+		b = srtStack->next;
+
+		while (b != NULL)
+		{
+			if (a->value > b->value)
+			{
+				if (t == a)
+					srtStack = b;
+				else
+					t->next = b;
+
+				a->next = b->next;
+				b->next = a;
+
+				m = a, a = b, b = m;
+				go = true;
+			}
+			t = a;
+			a = a->next;
+			b = b->next;
+		}
+	}
+}
+
+void SortStackByData(Node_t* srtStack)
+{
+	Node_t* a;
+	T  tmpData;
+
+	for (bool go = true; go; )
+	{
+		go = false;
+		a = srtStack;
+
+		while (a->next != NULL)
+		{
+			if (a->value > a->next->value)
+			{
+				tmpData = a->value;
+				a->value = a->next->value;
+				a->next->value = tmpData;
+				go = true;
+			}
+			a = a->next;
+		}
+	}
 }
 
 
@@ -99,9 +157,9 @@ int main()
 	char command = '\\';
 	int value;
 
-	puts(" 1 - Push\n 2 - Pop\n 3 - Print\n 4 - Delete negative elements\n 5 - Exit");
+	puts(" 1 - Push\n 2 - Pop\n 3 - Print\n 4 - Delete negative elements\n 5 - Sort by adress\n 6 - Sort by value\n 7 - Exit\n");
 
-	while (command != '5')
+	while (command != '7')
 	{
 		scanf_s("%1c", &command);
 
@@ -113,7 +171,7 @@ int main()
 			push(&head, value);
 			break;
 		case '2':
-			printf("%d\n", pop1(&head));
+			printf("%d\n", pop1(&head)->value);
 			break;
 		case '3':
 			printStack(head);
@@ -121,6 +179,12 @@ int main()
 		case '4':
 			head = dltNegativeElems(head);
 			printStack(head);
+			break;
+		case '5':
+			SortStackByData(head);
+			break;
+		case '6':
+			SortStackByData(head);
 			break;
 
 		default:
