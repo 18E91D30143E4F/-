@@ -13,6 +13,10 @@ typedef struct Node_tag
 } Node_t;
 
 
+void push(Node_t** head, T value);
+Node_t* pop1(Node_t** head);
+void SortStackByAdress(Node_t* srtStack);
+
 void push(Node_t** head, T value)
 {
 	Node_t* tmp = malloc(sizeof(Node_t));
@@ -20,6 +24,7 @@ void push(Node_t** head, T value)
 	{
 		exit(STACK_OVERFLOW);
 	}
+
 	tmp->next = *head;
 	tmp->value = value;
 	*head = tmp;
@@ -38,6 +43,7 @@ Node_t* pop1(Node_t** head)
 	return out;
 }
 
+void (*SortStackByAdres) (Node_t* srtStack);
 
 void SortStackByAdress(Node_t* srtStack)
 {
@@ -142,6 +148,7 @@ Node_t* dltNegativeElems(Node_t* head)
 size_t getSize(const Node_t* head)
 {
 	size_t size = 0;
+	SortStackByAdres = SortStackByData;
 	while (head)
 	{
 		size++;
@@ -181,7 +188,7 @@ int main()
 			printStack(head);
 			break;
 		case '5':
-			SortStackByData(head);
+			SortStackByAdres(head);
 			break;
 		case '6':
 			SortStackByData(head);
